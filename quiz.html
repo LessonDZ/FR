@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Prise de Notes — Quiz (20 Théorie + 20 QCM)</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --bg:#f7fbff; --card:#fff; --accent:#1d6ad8; --good:#2f855a; --bad:#c53030; --muted:#556; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:"Cairo",sans-serif;background:var(--bg);color:#111;line-height:1.6;padding:16px}
+  .container{max-width:1100px;margin:12px auto}
+  header{background:linear-gradient(90deg, rgba(29,106,216,0.06), rgba(43,138,120,0.03));padding:14px;border-left:6px solid var(--accent);border-radius:10px}
+  header h1{margin:0;color:var(--accent)}
+  header p{margin:8px 0 0;color:var(--muted)}
+  .card{background:var(--card);padding:16px;border-radius:10px;margin-top:14px;box-shadow:0 10px 30px rgba(10,30,60,0.04)}
+  h2{color:var(--accent);margin-top:0}
+  .theory-list{list-style:none;padding:0;margin:0}
+  .theory-item{border:1px solid #eef6ff;background:#fbfeff;padding:12px;border-radius:8px;margin-bottom:10px;cursor:pointer}
+  .theory-q{font-weight:700;color:var(--accent)}
+  .theory-a{display:none;margin-top:8px;color:var(--good);background:#f1fbf6;padding:10px;border-radius:6px;border:1px solid rgba(47,133,90,0.08)}
+  .qcard{border:1px solid #e6eef9;background:#fff;padding:12px;border-radius:10px;margin-bottom:12px}
+  .qtitle{font-weight:700;color:var(--accent);margin:0 0 8px 0}
+  .options{display:flex;flex-direction:column;gap:8px}
+  .option{background:#f8fbff;border:1px solid #dbeeff;padding:10px;border-radius:8px;cursor:pointer;font-weight:600}
+  .option.correct{background:#dff6e9;border-color:rgba(47,133,90,0.35);color:var(--good)}
+  .option.wrong{background:#ffecec;border-color:rgba(197,48,48,0.2);color:var(--bad)}
+  .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+  .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+  .btn.secondary{background:#fff;color:var(--accent);border:1px solid rgba(29,106,216,0.12)}
+  .result{margin-top:12px;font-weight:800;color:var(--accent);font-size:18px}
+  @media(max-width:720px){ .options{gap:6px} .theory-a{font-size:14px} }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Prise de Notes — Quiz</h1>
+      <p>20 questions théoriques (cliquez pour voir la réponse) + 20 QCM avec correction automatique.</p>
+    </header>
+
+    <section class="card">
+      <h2>Questions théoriques — Théorie (20)</h2>
+      <ul id="theoryList" class="theory-list"></ul>
+      <small style="color:var(--muted)">Cliquez sur la question pour afficher la réponse.</small>
+    </section>
+
+    <section class="card">
+      <h2>QCM — Multiple Choice (20)</h2>
+      <div id="quizContainer"></div>
+
+      <div class="controls">
+        <button id="showScoreBtn" class="btn">Afficher le score — عرض النتيجة</button>
+        <button id="resetBtn" class="btn secondary">Réinitialiser — إعادة تعيين</button>
+        <div id="scoreBox" class="result" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <footer style="text-align:center;margin-top:14px;color:var(--muted)">Préparé pour Prise de Notes — Année 1, filière française.</footer>
+  </div>
+
+  <script>
+    // ---------- Théorie (20) ----------
+    const theoryQuestions = [
+      { q:"1) Qu'est-ce que la prise de notes ?", a:"C'est le processus de noter les idées et informations essentielles pendant le cours pour mieux comprendre et réviser." },
+      { q:"2) Pourquoi prendre des notes ?", a:"Pour améliorer la concentration, rassembler les informations importantes et faciliter la révision." },
+      { q:"3) Quels sont les éléments d'une bonne note ?", a:"Titre, idée principale, définitions, exemples, notes secondaires et résumé." },
+      { q:"4) Quand réviser ses notes ?", a:"Idéalement dans les 24 heures, puis après une semaine et avant l'examen." },
+      { q:"5) Quelles sont les abréviations courantes ?", a:"ex. (exemple), def. (définition), → (conduit à), NB (note)." },
+      { q:"6) Quel est l'intérêt de la méthode Cornell ?", a:"Organiser la feuille en notes, mots-clés et résumé pour faciliter l'étude." },
+      { q:"7) Quand utiliser les cartes heuristiques ?", a:"Pour relier visuellement les idées et les concepts interconnectés." },
+      { q:"8) Comment distinguer idée principale et détail ?", a:"L'idée principale explique l'objectif général, les détails sont des exemples ou explications." },
+      { q:"9) Quel est le rôle des exemples ?", a:"Clarifier l'idée et faciliter la compréhension et la mémorisation." },
+      { q:"10) Comment gérer les informations volumineuses ?", a:"Utilisez des sous-titres, des abréviations et photographiez les diapositives si nécessaire." },
+      { q:"11) Faut-il écrire chaque mot ?", a:"Non, la prise efficace consiste à sélectionner les informations essentielles." },
+      { q:"12) Comment utiliser les couleurs ?", a:"Pour distinguer titres, exemples, dates ou termes clés." },
+      { q:"13) Différence entre résumé et note ?", a:"La note est prise pendant le cours, le résumé est fait ensuite de façon concise et organisée." },
+      { q:"14) Comment préparer sa feuille ?", a:"Écrire la date, le titre du cours et laisser de l'espace pour les notes additionnelles." },
+      { q:"15) Que faire si on rate une partie du cours ?", a:"Marquer un (?) et compléter plus tard à partir du livre." },
+      { q:"16) Importance de la reformulation ?", a:"Reformuler consolide la compréhension et transforme l'information en mémoire à long terme." },
+      { q:"17) Utilisation des outils numériques ?", a:"Utilisez des applications de notes, sections et tags pour un accès rapide." },
+      { q:"18) Erreurs fréquentes après la prise de notes ?", a:"Ne pas réviser et mémoriser sans comprendre le contexte." },
+      { q:"19) Comment évaluer ses notes ?", a:"Revoir après une semaine et essayer d'expliquer le contenu à quelqu'un d'autre." },
+      { q:"20) Conseil final pour des notes efficaces ?", a:"Concentrez-vous sur la compréhension avant d'écrire et combinez méthodes visuelles et écrites." }
+    ];
+
+    // render theory list
+    const theoryListEl = document.getElementById('theoryList');
+    theoryQuestions.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'theory-item';
+      li.innerHTML = `<div class="theory-q">${item.q}</div><div class="theory-a">${item.a}</div>`;
+      li.addEventListener('click', () => {
+        const a = li.querySelector('.theory-a');
+        a.style.display = (a.style.display === 'block') ? 'none' : 'block';
+      });
+      theoryListEl.appendChild(li);
+    });
+
+    // ---------- QCM (20) ----------
+    const qcm = [
+      { q:"1) Quel est l'objectif principal de la prise de notes ?", options:["Copier tout le discours","Noter les idées principales","Écrire des notes personnelles uniquement"], correct:1 },
+      { q:"2) Quelle méthode est bonne pour résumer un cours ?", options:["Écrire toute la page","Méthode Cornell","Ne pas écrire"], correct:1 },
+      { q:"3) Que mettre à la fin de la page (résumé) ?", options:["Petits détails","Résumé des 3 points clés","Seulement des images"], correct:1 },
+      { q:"4) Quel symbole indique un résultat ?", options:[">>","→","--"], correct:1 },
+      { q:"5) Quand réviser ses notes pour la première fois ?", options:["Après un mois","Dans les 24 heures","Jamais"], correct:1 },
+      { q:"6) Quel est l'intérêt des cartes heuristiques ?", options:["Distribuer visuellement les idées","Remplacer l'écriture","Perdre du temps"], correct:0 },
+      { q:"7) Que signifie ex. ?", options:["Exercice","Exemple","Erreur"], correct:1 },
+      { q:"8) Quel outil aide à organiser les notes numériques ?", options:["Carnet papier uniquement","Applications de notes (OneNote, etc.)","Stylo uniquement"], correct:1 },
+      { q:"9) Faut-il écrire chaque mot ?", options:["Oui","Non","Parfois"], correct:1 },
+      { q:"10) Quelle couleur utiliser pour les mots importants ?", options:["Couleur aléatoire","Couleur distinctive et limitée","Ne pas utiliser de couleur"], correct:1 },
+      { q:"11) Qu'est-ce qui aide à mémoriser lors de la révision ?", options:["Reformulation","Lecture rapide uniquement","Copie mot à mot"], correct:0 },
+      { q:"12) Que signifie NB ?", options:["Note importante","Rien","Exemple"], correct:0 },
+      { q:"13) Comment gérer une information manquante ?", options:["Deviner","Marquer et vérifier plus tard","Supprimer la page"], correct:1 },
+      { q:"14) Comment bien noter les exemples du professeur ?", options:["Copier mot à mot","Résumer seulement l'idée","Ignorer les exemples"], correct:1 },
+      { q:"15) Que faire juste après le cours ?", options:["Laisser les notes telles quelles","Réviser et compléter","Les effacer"], correct:1 },
+      { q:"16) Quel avantage d'utiliser des abréviations ?", options:["Ralentir","Accélérer la prise de notes","Rendre l'écriture compliquée"], correct:1 },
+      { q:"17) Que faut-il distinguer avec les couleurs ?", options:["Titres et mots-clés","Chaque mot","Notes de bas de page uniquement"], correct:0 },
+      { q:"18) Le résumé doit-il être long ?", options:["Oui, une page entière","Non, 6-10 lignes","Ne jamais résumer"], correct:1 },
+      { q:"19) Pourquoi noter la date sur les notes ?", options:["Aucune utilité","Classer les notes chronologiquement","Pour décorer"], correct:1 },
+      { q:"20) Quel est le meilleur test de qualité de vos notes ?", options:["Les donner à un ami pour qu'il explique","Ne pas réviser","Mémoriser mot à mot"], correct:0 }
+    ];
+
+    // render QCM
+    const quizContainer = document.getElementById('quizContainer');
+    let score = 0, answered = 0;
+    qcm.forEach((item, idx) => {
+      const card = document.createElement('div');
+      card.className = 'qcard';
+      card.dataset.index = idx;
+      card.innerHTML = `<div class="qtitle">${item.q}</div>`;
+      const optsDiv = document.createElement('div');
+      optsDiv.className = 'options';
+      item.options.forEach((opt, i) => {
+        const o = document.createElement('div');
+        o.className = 'option';
+        o.textContent = opt;
+        o.tabIndex = 0;
+        o.addEventListener('click', () => {
+          if (card.dataset.answered === 'true') return;
+          card.dataset.answered = 'true';
+          answered++;
+          if (i === item.correct) {
+            o.classList.add('correct');
+            score++;
+          } else {
+            o.classList.add('wrong');
+            const children = optsDiv.querySelectorAll('.option');
+            if (children[item.correct]) children[item.correct].classList.add('correct');
+          }
+        });
+        optsDiv.appendChild(o);
+      });
+      card.appendChild(optsDiv);
+      quizContainer.appendChild(card);
+    });
+
+    // Controls
+    const scoreBox = document.getElementById('scoreBox');
+    document.getElementById('showScoreBtn').addEventListener('click', () => {
+      const unanswered = qcm.length - answered;
+      scoreBox.textContent = `✅ Votre score: ${score} sur ${qcm.length} • نتيجتك: ${score} من ${qcm.length}` + (unanswered > 0 ? ` — (${unanswered} questions non répondues)` : '');
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      score = 0; answered = 0; scoreBox.textContent = '';
+      document.querySelectorAll('.qcard').forEach(card => {
+        card.dataset.answered = 'false';
+        card.querySelectorAll('.option').forEach(o => o.classList.remove('correct', 'wrong'));
+      });
+      document.querySelectorAll('.theory-a').forEach(a => a.style.display = 'none');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && document.activeElement.classList.contains('option')) {
+        document.activeElement.click();
+      }
+    });
+  </script>
+</body>
+</html>

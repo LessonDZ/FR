@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="fr" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prise de Notes — Cours détaillé (FR + AR)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7fbff; --card:#ffffff; --accent:#1d6ad8; --accent-2:#2b8a78;
+      --muted:#556; --good:#2f855a; --danger:#c53030;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:"Cairo",sans-serif; background:var(--bg); color:#111; line-height:1.65;
+      padding:18px;
+    }
+    .container{max-width:1100px;margin:12px auto}
+    header{
+      background:linear-gradient(90deg, rgba(29,106,216,0.06), rgba(43,138,120,0.03));
+      padding:18px; border-left:6px solid var(--accent); border-radius:12px;
+    }
+    header h1{margin:0;color:var(--accent); font-weight:700}
+    header p{margin:8px 0 0;color:var(--muted)}
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;justify-content:flex-start}
+    .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .btn.secondary{background:#fff;color:var(--accent);border:1px solid rgba(29,106,216,0.12)}
+    .card{background:var(--card);padding:18px;border-radius:12px;margin-top:16px;box-shadow:0 12px 30px rgba(12,30,60,0.06)}
+    h2{color:var(--accent);margin-top:0}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:880px){.two-col{grid-template-columns:1fr}}
+    .example{background:#eef6ff;padding:12px;border-radius:8px;border-left:4px solid var(--accent-2);margin:10px 0}
+    .note{background:#fff8e1;padding:12px;border-radius:8px;border-left:4px solid #f0c36d;margin-top:12px}
+    ul, ol{margin:10px 0 12px 22px}
+    .ficha{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    .fiche-item{background:#f1f9ff;padding:12px;border-radius:8px;border:1px solid #e6f0fb}
+    pre.diagram{background:#f0f6ff;padding:12px;border-radius:8px;font-family:monospace;color:#123e6b;overflow:auto}
+    .highlight{background:linear-gradient(90deg,#e6f3ff,#fff);padding:8px;border-radius:8px;border:1px solid #dbeeff}
+    .rtl-fr{direction:ltr;text-align:left} /* for French blocks readable LTR */
+    .section-title{font-weight:700;margin-bottom:8px;color:#123e6b}
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+    table{width:100%;border-collapse:collapse;margin-top:12px}
+    th,td{border:1px solid #e8f5ff;padding:10px;text-align:center}
+    th{background:var(--accent);color:#fff}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Prise de Notes — Cours détaillé (Français + الترجمة العربية)</h1>
+      <p>دليل كامل ومفصّل لطريقة أخذ الملاحظات، مع أمثلة عملية، طرق متنوعة، ملخصات سريعة ونصائح للامتحان.</p>
+    </header>
+
+    <div class="controls">
+      <button class="btn" onclick="window.print()">🖨️ طباعة / حفظ PDF</button>
+      <a href="quiz.html" class="btn secondary" style="text-decoration:none;padding:10px 12px;">الذهاب إلى الاختبار — Quiz</a>
+    </div>
+
+    <!-- 1. Intro & definition -->
+    <section class="card" id="definition">
+      <h2>1 — Définition / تعريف</h2>
+      <div class="two-col">
+        <div>
+          <div class="section-title">Français</div>
+          <p>
+            La <strong>prise de notes</strong> est l'ensemble des techniques permettant de sélectionner, synthétiser et organiser les informations essentielles entendues lors d'un cours, d'une conférence ou lues dans un document.  
+            Elle combine écoute active, reformulation et classement pour créer un support utilisable en révision.
+          </p>
+          <p class="highlight rtl-fr">Mise en pratique immédiate : ne copiez pas, reformulez.</p>
+        </div>
+
+        <div>
+          <div class="section-title">العربية</div>
+          <p>
+            تدوين الملاحظات هو مجموعة التقنيات التي تسمح باستخلاص وتلخيص وتنظيم المعلومات الأساسية الواردة في الدرس أو المحاضرة أو النص.  
+            يتضمن ذلك الاستماع بتركيز، إعادة الصياغة وترتيب الأفكار لإنشاء مرجع واضح للمراجعة.
+          </p>
+          <p class="highlight">قاعدة مهمة: لا تنقل الكلام حرفيًا — أعد صياغته بكلماتك.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. objectifs -->
+    <section class="card" id="objectifs">
+      <h2>2 — Objectifs / الأهداف</h2>
+      <div class="two-col">
+        <div>
+          <div class="section-title">Français — Objectifs principaux</div>
+          <ul>
+            <li>Retenir l'essentiel et structurer le savoir.</li>
+            <li>Faciliter la mémorisation active (répétition espacée).</li>
+            <li>Permettre une révision rapide et ciblée.</li>
+            <li>Fournir des exemples et preuves faciles à retrouver.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="section-title">العربية — لماذا ندوّن؟</div>
+          <ul>
+            <li>لاحتفاظ بالنقاط الأساسية وتنظيمها.</li>
+            <li>لتسهيل الحفظ عبر المراجعات المتكررة.</li>
+            <li>لإجراء مراجعات سريعة قبل الامتحان.</li>
+            <li>لحفظ الأمثلة والأدلة التي يذكرها الأستاذ.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. méthodes détaillées -->
+    <section class="card" id="methodes">
+      <h2>3 — Méthodes & Techniques détaillées / طرق وتقنيات</h2>
+
+      <h3 class="section-title">A. Méthode Cornell — طريقة كورنيل (مفصّلة)</h3>
+      <div class="two-col">
+        <div>
+          <p class="rtl-fr"><strong>Structure:</strong> Left column (Keywords) — Right column (Notes) — Bottom (Summary)</p>
+          <ol>
+            <li>During lecture: write concise notes in the right column.</li>
+            <li>After lecture: add keywords/questions on the left.</li>
+            <li>Summarize the page in 4–6 lines at the bottom.</li>
+          </ol>
+          <p class="rtl-fr"><strong>Benefits:</strong> Encourages active recall and simplifies review sessions.</p>
+        </div>
+        <div>
+          <p><strong>الشرح بالعربية:</strong> قسّم الصفحة إلى ثلاثة:  
+            عمود للملاحظات التفصيلية، عمود للكلمات المفتاحية أو الأسئلة، ومكان في الأسفل لكتابة الملخص.  
+            بعد انتهاء الدرس، ضع الكلمات المفتاحية وفكرة مختصرة — هذا يجعل المراجعة أسرع ويلغى الحشو.
+          </p>
+        </div>
+      </div>
+
+      <h3 class="section-title">B. Mind Mapping — الخريطة الذهنية</h3>
+      <div class="two-col">
+        <div>
+          <p>Start from a central concept, branch out to nodes (main ideas), then to subnodes (examples, dates, formulas). Use colors and icons.</p>
+          <p class="rtl-fr"><strong>When to use:</strong> For subjects with many interrelated concepts (history, theories, linguistics).</p>
+        </div>
+        <div>
+          <p><strong>متى تستخدمها؟</strong> عند وجود علاقات كثيرة بين المفاهيم—توضح الترابط وتسهّل التذكر البصري.</p>
+        </div>
+      </div>
+
+      <h3 class="section-title">C. Liste hiérarchique & prise linéaire — الترتيب الهرمي والتدوين الخطي</h3>
+      <div class="two-col">
+        <div>
+          <p>Organize by levels: Title → Main idea → Sub-idea → Example. Use numbers, letters and indentation.</p>
+          <pre class="diagram">I. Titre
+  A. Idée principale
+    1) Détail / exemple</pre>
+        </div>
+        <div>
+          <p>الطريقة مناسبة لمحاضرات منظمة حيث يتبع الأستاذ تسلسلًا واضحًا؛ سريع وسهل للتطبيق أثناء الحصة.</p>
+        </div>
+      </div>
+
+      <h3 class="section-title">D. Symboles & abréviations — رموز واختصارات</h3>
+      <div class="two-col">
+        <div>
+          <ul>
+            <li>→ : conduit à / يؤدي إلى</li>
+            <li>≠ : ≠</li>
+            <li>def. : définition</li>
+            <li>ex. : exemple</li>
+            <li>NB : note importante</li>
+          </ul>
+        </div>
+        <div>
+          <p>Créez votre propre dictionnaire d’abréviations : cela augmente la vitesse d’écriture sans perdre d’information.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. exemples nombreux -->
+    <section class="card" id="exemples">
+      <h2>4 — Exemples pratiques & Cas réels / أمثلة عملية</h2>
+
+      <div class="example">
+        <div class="section-title">Exemple A — Cours de littérature</div>
+        <p><b>Français :</b> Prof: « Le symbolisme privilégie l'image et la nuance plutôt que la narration directe. »  
+        → Note: <i>Symbolisme = image + nuance ≠ récit direct (ex : Mallarmé)</i></p>
+        <p><b>العربية :</b> إذا قال الأستاذ: "الرمزية تفضّل الصورة والرمز بدلاً من السرد الواضح."  
+        → ملاحظة: <i>الرمزية = صورة + تلميح ≠ السرد</i></p>
+      </div>
+
+      <div class="example">
+        <div class="section-title">Exemple B — Cours d'histoire (مخطط)</div>
+        <p><b>Français :</b> Causes → Conséquences (use arrows)</p>
+        <pre class="diagram">Crise eco. 1780 → mécontentement pop. → Révolution 1789</pre>
+        <p><b>العربية :</b> الأزمة الاقتصادية → استياء الشعب → الثورة</p>
+      </div>
+
+      <div class="example">
+        <div class="section-title">Exemple C — Application Cornell (بعد الدرس)</div>
+        <ol>
+          <li>Notes détaillées: définitions, dates, exemples</li>
+          <li>Mots-clés: "Révolution", "Fiscalité", "Lumières"</li>
+          <li>Résumé bas de page: "ثورة بسبب أزمات اقتصادية واجتماعية وتأثير أفكار التنوير"</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 5. après le cours -->
+    <section class="card" id="apres">
+      <h2>5 — Après la séance / بعد الحصة</h2>
+
+      <div class="two-col">
+        <div>
+          <h3 class="section-title">Français — To do within 24h</h3>
+          <ul>
+            <li>Relire et compléter les notes (remplir les trous).</li>
+            <li>Transformer les points flous en questions (active recall).</li>
+            <li>Rédiger un résumé de 6–10 lignes.</li>
+            <li>Créer des flashcards (Anki, Quizlet) pour définitions/dates.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="section-title">العربية — ماذا أفعل بعد الدرس؟</h3>
+          <ul>
+            <li>إعادة قراءة وتكملة الملاحظات خلال 24 ساعة.</li>
+            <li>تحويل النقاط الغامضة إلى أسئلة لمراجعة نشطة.</li>
+            <li>كتابة ملخص قصير (6–10 سطور).</li>
+            <li>صنع بطاقات للمصطلحات والتواريخ للمراجعة.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note">
+        <strong>Remarque / ملاحظة:</strong> La révision espacée (répéter la révision à J+1, J+7, J+30) augmente énormément la rétention.
+      </div>
+    </section>
+
+    <!-- 6. erreurs -->
+    <section class="card" id="erreurs">
+      <h2>6 — Erreurs à éviter / أخطاء شائعة</h2>
+      <ul>
+        <li>Écrire tout mot à mot → perd du temps.</li>
+        <li>Ne pas organiser la page (absence de titres).</li>
+        <li>Ne pas relire / laisser les notes incomplètes.</li>
+        <li>Confondre copie et compréhension.</li>
+      </ul>
+
+      <div class="example">
+        <div class="section-title">Conseil pratique</div>
+        <p>Si vous manquez une partie: notez un symbole (ex: "??") et demandez au professeur / camarade après la séance.</p>
+      </div>
+    </section>
+
+    <!-- 7. fiche rapide & résumé -->
+    <section class="card" id="fiche">
+      <h2>7 — Fiche rapide & Résumé imprimable / ملخص سريع للطباعة</h2>
+
+      <div class="ficha">
+        <div class="fiche-item">
+          <strong>FR — Points clés</strong>
+          <ul>
+            <li>Choisir une méthode (Cornell, mind map,...)</li>
+            <li>Utiliser abréviations & symboles</li>
+            <li>Relire dans les 24h</li>
+            <li>Faire résumé & flashcards</li>
+          </ul>
+        </div>
+
+        <div class="fiche-item">
+          <strong>AR — النقاط الأساسية</strong>
+          <ul>
+            <li>اختر طريقة مناسبة</li>
+            <li>استخدم اختصارات ورموز</li>
+            <li>راجع خلال 24 ساعة</li>
+            <li>اكتب ملخصًا قصيرًا واصنع بطاقات</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="section-title">Résumé synthétique / الخلاصة</h3>
+      <p>
+        <strong>FR:</strong> Prendre des notes, c'est trier l'information, la reformuler et la structurer pour mémoriser et réviser efficacement. Choisissez une méthode adaptée, soyez sélectif, et révisez rapidement après la séance.<br>
+        <strong>AR:</strong> تدوين الملاحظات يعني اختيار المعلومات وإعادة صياغتها وتنظيمها لحفظها ومراجعتها بشكل فعّال. اختر طريقة مناسبة، كن انتقائياً، وراجع الملاحظات بسرعة بعد المحاضرة.
+      </p>
+    </section>
+
+    <!-- 8. ressources & outils -->
+    <section class="card" id="outils">
+      <h2>8 — Outils recommandés / أدوات مقترحة</h2>
+      <div class="two-col">
+        <div>
+          <strong>FR — Digital tools</strong>
+          <ul>
+            <li>OneNote / Evernote / Notion</li>
+            <li>Anki / Quizlet (flashcards)</li>
+            <li>SimpleMind / XMind (mind maps)</li>
+            <li>Google Drive pour synchronisation</li>
+          </ul>
+        </div>
+        <div>
+          <strong>AR — أدوات مفيدة</strong>
+          <ul>
+            <li>OneNote لتنظيم الصفحات</li>
+            <li>Anki لبطاقات الحفظ</li>
+            <li>مخططات ذهنية لرسم العلاقات</li>
+            <li>جوجل درايف للحفظ والمشاركة</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>Prepared for first-year French students — جاهز للمراجعة والطباعة.</footer>
+  </div>
+
+  <script>
+    /* Small enhancement: collapse/expand French blocks for readability when printed on RTL pages.
+       (No extra interaction required; kept minimal to ensure print-friendliness.) */
+    (function(){ /* placeholder if future interaction needed */ })();
+  </script>
+</body>
+</html>
